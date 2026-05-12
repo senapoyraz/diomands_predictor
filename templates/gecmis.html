@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Geçmiş Tahminler</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            min-height: 100vh;
+            padding: 2rem;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            background: linear-gradient(90deg, #a78bfa, #60a5fa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        table {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: rgba(167,139,250,0.2);
+            color: #c4b5fd;
+            padding: 0.8rem 1rem;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        tr:hover td { background: rgba(255,255,255,0.05); }
+
+        .fiyat {
+            font-weight: 700;
+            background: linear-gradient(90deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .geri {
+            display: block;
+            text-align: center;
+            margin: 2rem auto 0 auto;
+            max-width: 200px;
+            padding: 0.7rem 1.5rem;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 Geçmiş Tahminler</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Tarih</th>
+                <th>Karat</th>
+                <th>Kesim</th>
+                <th>Renk</th>
+                <th>Berraklık</th>
+                <th>Tahmin</th>
+            </tr>
+        </thead>
+        <tbody id="tablo"></tbody>
+    </table>
+
+    <a class="geri" href="/">← Geri Dön</a>
+
+    <script>
+        fetch('/api/gecmis')
+            .then(r => r.json())
+            .then(data => {
+                const tbody = document.getElementById('tablo');
+                data.forEach(r => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${r[0]}</td>
+                            <td>${r[1]}</td>
+                            <td>${r[2]}</td>
+                            <td>${r[3]}</td>
+                            <td>${r[4]}</td>
+                            <td>${r[5]}</td>
+                            <td class="fiyat">$${r[8].toLocaleString()}</td>
+                        </tr>
+                    `;
+                });
+            });
+    </script>
+</body>
+</html>
